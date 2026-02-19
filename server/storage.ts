@@ -1,38 +1,45 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import { uploads, generatedContent, type Upload, type InsertUpload, type GeneratedContent, type InsertGeneratedContent } from "@shared/schema";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  createUpload(upload: InsertUpload): Promise<Upload>;
+  getUpload(id: number): Promise<Upload | undefined>;
+  createGeneratedContent(content: InsertGeneratedContent): Promise<GeneratedContent>;
+  getGeneratedContent(id: number): Promise<GeneratedContent | undefined>;
+  listGeneratedContent(): Promise<GeneratedContent[]>;
+  getGeneratedContentByUploadId(uploadId: number): Promise<GeneratedContent | undefined>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async createUpload(upload: InsertUpload): Promise<Upload> {
+    const [newUpload] = await db.insert(uploads).values(upload).returning();
+    return newUpload;
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getUpload(id: number): Promise<Upload | undefined> {
+    const [upload] = await db.select().from(uploads).where(eq(uploads.id, id));
+    return upload;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async createGeneratedContent(content: InsertGeneratedContent): Promise<GeneratedContent> {
+    const [newContent] = await db.insert(generatedContent).values(content).returning();
+    return newContent;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async getGeneratedContent(id: number): Promise<GeneratedContent | undefined> {
+    const [content] = await db.select().from(generatedContent).where(eq(generatedContent.id, id));
+    return content;
+  }
+
+  async listGeneratedContent(): Promise<GeneratedContent[]> {
+    return db.select().from(generatedContent).orderBy(desc(generatedContent.createdAt));
+  }
+
+  async getGeneratedContentByUploadId(uploadId: number): Promise<GeneratedContent | undefined> {
+    const [content] = await db.select().from(generatedContent).where(eq(generatedContent.uploadId, uploadId));
+    return content;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
