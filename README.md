@@ -11,7 +11,7 @@
 
 **Turn Boring PDFs into Fun Quizzes! Upload any study material, notes, or textbook chapters. Our AI instantly creates interactive games to help you master the topic.**
 
-[Live Demo]([https://sl1nk.com/concept-game-engine]) <!-- TODO: Add actual live demo link if available --> |
+[Live Demo]([https://concept-game-engine--patilritesh2006.replit.app/)]) <!-- TODO: Add actual live demo link if available --> |
 [Documentation](https://docs.doc-to-game.com) <!-- TODO: Add documentation link if available -->
 
 </div>
