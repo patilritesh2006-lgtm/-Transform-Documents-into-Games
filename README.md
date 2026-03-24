@@ -1,7 +1,6 @@
 # 🤖 AI-Powered Document to Game Transformer
 
 <div align="center">
-
 <!-- TODO: Add a compelling project logo or banner -->
 
 [![GitHub stars](https://img.shields.io/github/stars/patilritesh2006-lgtm/-Transform-Documents-into-Games?style=for-the-badge)](https://github.com/patilritesh2006-lgtm/-Transform-Documents-into-Games/stargazers)
@@ -11,8 +10,6 @@
 
 **Turn Boring PDFs into Fun Quizzes! Upload any study material, notes, or textbook chapters. Our AI instantly creates interactive games to help you master the topic.**
 
-[Live Demo]([https://concept-game-engine--patilritesh2006.replit.app/]) <!-- TODO: Add actual live demo link if available --> |
-[Documentation](https://docs.doc-to-game.com) <!-- TODO: Add documentation link if available -->
 
 </div>
 
